@@ -117,16 +117,12 @@ const AUTH_KEY="joelee";
 router.get("/cdnauth", async (ctx, next) => {
   try {
     console.log(ctx.query.key);
-    ctx.body = {
-      code:ctx.query.key===AUTH_KEY? 200:403,
-    };
+    if(ctx.query.key===AUTH_KEY)
+      ctx.status=200;
+    else
+      ctx.status=403;
   } catch (err) {
-    console.log(err);
-    ctx.body = {
-      msg: "上传失败",
-      code: 444,
-
-    };
+    ctx.status=403;
   }
 });
 
