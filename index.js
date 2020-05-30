@@ -116,13 +116,12 @@ const AUTH_KEY="joelee";
 
 router.get("/cdnauth", async (ctx, next) => {
   try {
-    console.log(ctx.query.key);
     if(ctx.query.key===AUTH_KEY)
       ctx.status=200;
     else
-      ctx.status=403;
+      ctx.status=401;
   } catch (err) {
-    ctx.status=403;
+    ctx.status=401;
   }
 });
 
