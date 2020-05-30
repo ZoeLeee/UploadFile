@@ -112,8 +112,26 @@ router.post("/upload", async (ctx, next) => {
   }
 });
 
+const AUTH_KEY="joelee";
+
+router.get("/cdnauth", async (ctx, next) => {
+  try {
+    console.log(ctx.query.key);
+    ctx.body = {
+      code:ctx.query.key===AUTH_KEY? 200:403,
+    };
+  } catch (err) {
+    console.log(err);
+    ctx.body = {
+      msg: "上传失败",
+      code: 444,
+
+    };
+  }
+});
+
 app.use(router.routes());
 
-app.listen(3333, () => {
-  console.log("listening on 3333")
+app.listen(3600, () => {
+  console.log("listening on 3600")
 });
