@@ -10,10 +10,10 @@ var os = require('os');
 function getUploadUrl() {
   const ocType = os.type();
   if (ocType === "Windows_NT") {
-    return "/upload"
+    return path.join(__dirname, "/upload");
   }
   else
-    return "../upload"
+    return "/var/www/html/upload";
 }
 
 
@@ -123,10 +123,9 @@ router.post("/uploadImg", async (ctx, next) => {
     const file = ctx.request.files.files;	// 获取上传文件
     const reader = fs.createReadStream(file.path);	// 创建可读流
     const ext = file.name.split('.').pop();		// 获取上传文件扩展名
-    console.log('ext: ', ext);
     let name = `${Date.now().toString()}.${ext}`
     let url = `${getUploadUrl()}/${name}`
-    const upStream = fs.createWriteStream(path.join(__dirname, url));		// 创建可写流
+    const upStream = fs.createWriteStream( url);		// 创建可写流
     reader.pipe(upStream);	// 可读流通过管道写入可写流
 
     ctx.body = {
